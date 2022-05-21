@@ -44,6 +44,14 @@
           >
         </li>
       </ul>
+      <ul class="loadergraph-components-list">
+        <li :is="loadergraph.component"
+            v-for="item in loadergraph.cards"
+            :key="item.id"
+            :itemProps="item">
+
+        </li>
+      </ul>
   </div>
 </template>
 
@@ -118,8 +126,7 @@ export default {
   },
   computed:{
     ...mapState([
-      'loadertext',
-      'link']), 
+      'loadertext','loadergraph','link']), 
   },
   created(){
       console.log('dddd')

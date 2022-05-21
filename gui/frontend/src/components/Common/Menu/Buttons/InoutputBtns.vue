@@ -361,7 +361,10 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentLink','drawLink', 'documents', 'globalview', 'loadertext', 'topics', 'ontology', 'embeddinggenerator'])
+    ...mapState(['loadergraph',
+    'currentLink',
+    'drawLink',  
+    'loadertext'])
   },
 
   watch:{
