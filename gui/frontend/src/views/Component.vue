@@ -10,7 +10,12 @@
 import {mapState} from 'vuex'
 export default {
   name: 'App',
-
+  props: {
+    compId: {
+      type: String, 
+      required: true, 
+    }
+  },
   components: {
     // KGExtractor
   },
