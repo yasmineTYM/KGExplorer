@@ -28,14 +28,15 @@
             mdi-package-variant-closed 
           </v-icon>
           {{selectedCorpusName}}
-          <v-progress-circular
+          <!-- <v-progress-circular
             indeterminate
             :width="2"
+            :size="100"
             color="green"
             v-if="itemProps.loadingStatus"
             :style="{position: 'static'}"
             v-on="on"
-            ></v-progress-circular>
+            ></v-progress-circular> -->
         </v-card-text>
         <v-card-actions>
           <InoutputBtns
@@ -135,6 +136,7 @@ export default {
   methods:{
     cardDoubleClick(){
       this.dialog = true;
+    //   this.itemProps.loadingStatus = true
     },
     loaderAction(e){
       if(e.status == "success"){
@@ -142,6 +144,7 @@ export default {
         e.selected.cardId = this.itemProps.id
         this.$store.dispatch('loadergraph/addCorpus', e.selected)
       }
+    
       this.dialog = false;
     }
 
