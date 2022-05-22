@@ -1,3 +1,4 @@
+/* eslint-disable no-inner-declarations */
 export const cardOperationMixin ={
     data(){
 
@@ -12,6 +13,8 @@ export const cardOperationMixin ={
             this.marginLeft = posX
         }, 
         dragStartHandler(e){
+            console.log(e)
+            console.log(this.draggable)
             if (e.buttons == 1 && this.draggable) {
               const that = this
               const comp = document.querySelector(`#${this.itemProps.id}`)

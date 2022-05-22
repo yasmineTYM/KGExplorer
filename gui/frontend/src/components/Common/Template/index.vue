@@ -4,31 +4,20 @@
       v-slot="{hover}"
     >
       <v-card
+        outlined
         :elevation="hover ? 12 : 5"
         class="card-documents"
         :draggable="false"
         @mousedown="dragStartHandler"
         @dragstart="false"
-        outlined
         :id="itemProps.id"
-        ref="cardComp"
         @dblclick.stop="cardDoubleClick"
         @contextmenu = "rightClickMenuShow"
         :style="{top: marginTop + 'px', left: marginLeft +'px', width: `${width}px`, height: `${height}px`, position: 'absolute'}"
         :loading="itemProps.loadingStatus"
       >
-        <v-card-text v-if="!itemProps.selectedTable" class="card-name">
-          <v-icon>
-            mdi-database  
-          </v-icon>
-          {{selectedCorpusName}}
-        </v-card-text>
-        <v-card-text v-else class="card-name title-mini">
-          <v-icon>
-            mdi-database  
-          </v-icon>
-          {{selectedCorpusName}}
-        </v-card-text>
+        <slot name="view"></slot>
+
         <v-card-actions>
           <InoutputBtns
             :resizingStatus="resizingStatus"
@@ -56,9 +45,7 @@
         v-model="dialog"
         max-width="800"
       >
-        <LoaderTextPre
-          @loaderAction="loaderAction"
-        />
+        <slot name="dialog" :close="closeDialog"></slot>
       </v-dialog>
   
     <v-menu
@@ -82,7 +69,6 @@
 import {mapState} from 'vuex'
 import RightClickMenu from '@/components/Common/RightClick/RightClickMenu'
 import InoutputBtns from '@/components/Common/Menu/Buttons/InoutputBtns'
-import LoaderTextPre from '@/components/KGCreator/KGExtractor/LoaderTextPre'
 import {cardOperationMixin} from '@/mixins/cardOperationMixin.js'
 export default {
   props: [
@@ -117,13 +103,9 @@ export default {
       ], 
 
       container: '.corpus-components-list',
-
       rightBtn: true,
-
       topBtn: false,
-
       leftBtn: false, 
-
       dialog: false,
     }
   },
@@ -131,14 +113,13 @@ export default {
     cardDoubleClick(){
       this.dialog = true;
     },
-    loaderAction(e){
-      if(e.status == "success"){
-        delete e.status
-        e.selected.cardId = this.itemProps.id
-        this.$store.dispatch('loadertext/addCorpus', e.selected)
-      }
-      this.dialog = false;
-    }
+    toggleDialog() {
+      this.dialog = !this.dialog
+    },
+    closeDialog() {
+      this.dialog = false
+    } 
+
 
   },
   created(){
@@ -158,38 +139,16 @@ export default {
       return !(this.drawLink || this.resizingStatus);
     }, 
 
-    selectedCorpusName(){
-      if(this.itemProps.selectedTable){
-        const tableName = this.itemProps.selectedTable.table
-        this.width = 56 + 8*tableName.length
-        return tableName
-      }else{
-        return 'No Corpus'
-      }
-    }
   },
 
   components: {
     RightClickMenu,
     InoutputBtns,
-    LoaderTextPre
   }
 }
 </script>
 
 <style scoped> 
-  .card-name{
-    text-align: center;
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    height: 100%;
-  }
-  .title-mini {
-    color: steelblue!important;
-    font-weight: bold;
-  }
   /* .card-actions{
     position: absolute;
     transform: translate(300px, -150px);

@@ -22,7 +22,7 @@ export default {
     cards: [
        
     ],
-    component: () => import('@/components/KGCreator/KGExtractor/LoaderTextComp'), 
+    component: () => import('@/components/KGCreator/KGExtractor'), 
   }, 
   mutations: {
     ADD_COMPONENT(state){

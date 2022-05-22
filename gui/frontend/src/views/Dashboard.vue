@@ -112,6 +112,7 @@ export default {
       }
     },
     mouseUp(){
+      console.log(this.drawLink)
       if(this.drawLink === true){
         console.log('Finish drawing'); 
         this.$store.dispatch('changeLinkDrawingStatus', false);
@@ -126,7 +127,7 @@ export default {
   },
   computed:{
     ...mapState([
-      'loadertext','loadergraph','link']), 
+      'loadertext','loadergraph','link', 'drawLink', 'currentDragging']), 
   },
   created(){
       console.log('dddd')

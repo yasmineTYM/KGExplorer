@@ -173,11 +173,12 @@ export default {
 
       function drawLine(canvas){     
         canvas
-          .on('mousemove', function(){
+          .on('mousemove', (event) => {
             
             if(vm.keep){
               pathGroupEnter.merge(pathGroup)
-                .attr('d', line([xy0, d3.mouse(this).map(x=>x-1)]))
+                // d3.mouse change to d3.pointer(.) in new version
+                .attr('d', line([xy0, d3.pointers(event)[0].map(x=>x-1)]))
             }
           })
           .on('mouseup', function(){
@@ -191,6 +192,7 @@ export default {
   
     
     finishLink(e){
+      console.log(1)
       if(!this.drawLink || !this.currentLink.source || this.currentLink.source.id === this.componentId){
         this.finishLinking();
         this.canvas
@@ -232,37 +234,12 @@ export default {
 
       const sourceType = this.currentLink.source.id.split('-')[1];
       const targetType = this.currentLink.target.id.split('-')[1];
-      
-
-      // this.$store.dispatch(`${sourceType}/addLink`, {
-      //   id: this.currentLink.source.id+'_'+this.currentLink.target.id,
-      //   source: this.currentLink.source.id, 
-      //   sourcePos: this.currentLink.source.pos, 
-      //   sourceBtn: 'right-btn-icon',
-      //   target: this.currentLink.target.id, 
-      //   targetPos: this.currentLink.target.pos, 
-      //   targetBtn: e.target.getAttribute('pos'),
-      //   d: linkD,
-      //   status: 'source'
-      // })
-
-      // this.$store.dispatch(`${targetType}/addLink`, {
-      //   id: this.currentLink.source.id+'_'+this.currentLink.target.id,
-      //   source: this.currentLink.source.id, 
-      //   sourcePos: this.currentLink.source.pos, 
-      //   sourceBtn: 'right-btn-icon',
-      //   target: this.currentLink.target.id, 
-      //   targetPos: this.currentLink.target.pos, 
-      //   targetBtn: e.target.getAttribute('pos'),
-      //   d: linkD,
-      //   status: 'target'
-      // })
-      // remove the currentLinking and dispatch the status in store
       this.finishLinking();
      
     },
 
     finishLinking(){
+      console.log(2)
       if(this.drawLink){
         // Draw Link First and then remove the drawing one
         this.canvas.selectAll('.drawing').attr('d', null); 
@@ -357,16 +334,16 @@ export default {
       
     }
   },
-  created(){
-  },
-
   computed: {
     ...mapState(['loadergraph',
     'currentLink',
     'drawLink',  
     'loadertext'])
   },
-
+  created() {
+    window.d3 = d3
+    console.log("check d3:", d3.mouse)
+  }, 
   watch:{
     marginLeft: function (){
       this.temp();

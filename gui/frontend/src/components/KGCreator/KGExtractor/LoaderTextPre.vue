@@ -98,11 +98,13 @@ export default {
   },
   methods: {
     cancelSelect(){
+      this.$emit('closeDialog')
       this.$emit('loaderAction', {status: 'fail'})
       this.selected = []
     },
     confirmSelect(){
       if(this.selected.length > 0){
+        this.$emit('closeDialog')
         this.$emit('loaderAction', {status: 'success', selected: this.selected[0]})
         this.selected = []
       }else{
