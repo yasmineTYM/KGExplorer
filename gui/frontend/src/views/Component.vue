@@ -1,35 +1,38 @@
 <template>
   <div>
-    <a :is="component" :itemProps="loadertext.cards[0]"/>
+    <a :is="compState.inner_component" :itemProps="itemProps"/>
   </div> 
 </template>
 
 <script>
-// import Scatter from './components/Scatter';
-// import KGExtractor from '@/components/KGCreator/KGExtractor/Content'
 import {mapState} from 'vuex'
 export default {
   name: 'App',
   props: {
-    compId: {
+    compid: {
+      type: String, 
+      required: true, 
+    }, 
+    comp_type: {
       type: String, 
       required: true, 
     }
   },
-  components: {
-    // KGExtractor
-  },
-
   data: () => ({
     //
-    component: () => import ('@/components/KGCreator/KGExtractor/Content')
+    component: undefined,
+    itemProps: undefined, 
   }),
   created() {
-    alert('created')
-    console.log(this.loadertext.cards[0])
+    this.itemProps = 
+      this.compState.cards.filter(card => card.id == this.compid)[0]
   },
   computed: {
-    ...mapState(['loadertext'])
+    ...mapState({
+      compState: function(state){
+        return state[this.comp_type]
+      }
+    })
   },
   methods:{
 

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import {mapState} from 'vuex'
+import {COMP_GARD} from './config/routerConfig'
 
 Vue.use(VueRouter)
 
@@ -15,11 +15,7 @@ const routes = [
     name: 'Component', 
     component: () => import('../views/Component'), 
     props: true, 
-    // beforeEnter (to, from, next) {
-    //   // ...
-    //   console.log("to ... ") 
-    //   console.log(to)
-    // }
+    beforeEnter: COMP_GARD
   }
 ]
 

@@ -19,10 +19,9 @@ export default {
   namespaced: true,
   state: {
     nextAvailableIndex: 0,
-    cards: [
-       
-    ],
+    cards: [],
     component: () => import('@/components/KGCreator/KGExtractor'), 
+    inner_component: () => import('@/components/KGCreator/KGExtractor/Content')
   }, 
   mutations: {
     ADD_COMPONENT(state){
@@ -108,6 +107,20 @@ export default {
       console.log('adding')
       commit('ADD_COMPONENT');
     },
+    checkExist({state}, compid){
+      console.log("checking " + compid)
+      if (state.cards.filter(item => item.id == compid).length > 0){
+        return true 
+      }else {
+        return false
+      }
+    },
+    getComponent({state}) {
+      return state.component 
+    },
+    getComponentInner({state}) {
+      return state.inner_component
+    }, 
     deleteComp({commit, state, dispatch}, id){
       const toDeletedComp = state.cards.filter(card => card.id == id)[0];
       

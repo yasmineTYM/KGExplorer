@@ -49,7 +49,6 @@
             v-for="item in loadergraph.cards"
             :key="item.id"
             :itemProps="item">
-
         </li>
       </ul>
   </div>
@@ -132,6 +131,7 @@ export default {
   created(){
       console.log('dddd')
       console.log(this.link)
+      console.log(this)
   },
   watch:{
     link(newVal, oldVal){
