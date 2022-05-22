@@ -11,10 +11,10 @@ const routes = [
     component: () => import('../views/Dashboard')
   },
   {
-    path: '/component/:compid', 
+    path: '/component/comp1',
     name: 'Component', 
     component: () => import('../views/Component'), 
-    props: true, 
+    // props: true, 
     // beforeEnter (to, from, next) {
     //   // ...
     //   console.log("to ... ") 

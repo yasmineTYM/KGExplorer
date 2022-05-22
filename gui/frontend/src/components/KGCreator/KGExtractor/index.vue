@@ -6,12 +6,12 @@
         <Content :itemProps="itemProps"/>
       </template>
 
-      <template v-slot:dialog="{close}">
+      <!-- <template v-slot:dialog="{close}">
         <LoaderTextPre
             @loaderAction="loaderAction"
             @closeDialog="close"
         />
-      </template> 
+      </template>  -->
     </CompTemplate>
   </div>
 </template>

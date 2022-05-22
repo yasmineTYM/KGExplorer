@@ -112,7 +112,7 @@ export default {
       }
     },
     mouseUp(){
-      console.log(this.drawLink)
+      // console.log(this.drawLink)
       if(this.drawLink === true){
         console.log('Finish drawing'); 
         this.$store.dispatch('changeLinkDrawingStatus', false);

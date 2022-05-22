@@ -41,13 +41,13 @@
       </v-card>
     </v-hover>
 
-      <v-dialog
+      <!-- <v-dialog
         v-model="dialog"
         max-width="800"
       >
         <slot name="dialog" :close="closeDialog"></slot>
       </v-dialog>
-  
+   -->
     <v-menu
       v-model="showRightClickMenu"
       :position-x="rightMenuX"
@@ -106,19 +106,21 @@ export default {
       rightBtn: true,
       topBtn: false,
       leftBtn: false, 
-      dialog: false,
+      // dialog: false,
     }
   },
   methods:{
     cardDoubleClick(){
-      this.dialog = true;
+      // this.dialog = true;
+      // console.log('test')
+      // this.$router.push({ name: 'Component'})
     },
-    toggleDialog() {
-      this.dialog = !this.dialog
-    },
-    closeDialog() {
-      this.dialog = false
-    } 
+    // toggleDialog() {
+    //   this.dialog = !this.dialog
+    // },
+    // closeDialog() {
+    //   this.dialog = false
+    // } 
 
 
   },

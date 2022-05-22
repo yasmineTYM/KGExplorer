@@ -11,10 +11,10 @@ import {mapState} from 'vuex'
 export default {
   name: 'App',
   props: {
-    compId: {
-      type: String, 
-      required: true, 
-    }
+    // compid: {
+    //   type: String, 
+    //   required: true, 
+    // }
   },
   components: {
     // KGExtractor
@@ -25,8 +25,8 @@ export default {
     component: () => import ('@/components/KGCreator/KGExtractor/Content')
   }),
   created() {
-    alert('created')
-    console.log(this.loadertext.cards[0])
+    // alert('created')
+    // console.log(this.loadertext.cards[0])
   },
   computed: {
     ...mapState(['loadertext'])
