@@ -10,7 +10,7 @@ function createNewCorpusCard(id){
     marginTop: null, 
     width: null, 
     height: null,
-    data: undefined,
+    data: {data:null, tableNames:[]},
     loadingStatus: false, 
     maximized: false, 
   }
@@ -167,15 +167,16 @@ export default {
         if(state.cards[i].id == data.cardId && state.cards[i].selectedTable !== data){
           commit('ADD_DATA', data);
           commit('UPDATE_LOADING_STATUS', {id: data.cardId, status: true})
-          console.log(data);
-          let tabularData = await axios.get('http://127.0.0.1:5000/getTable')
-          console.log(tabularData); 
+          const payload = {
+            'filename': data['table']
+          }
+          let tabularData = await axios.post('http://127.0.0.1:5000/getTable', payload)
+          let parsed = tabularData.data
           commit('LOAD_DATA', {id: data.cardId, data: {
-            data: {...tabularData.data} , 
-            tableNames: Object.keys(tabularData.data)
+            data: {...parsed} , 
+            tableNames: Object.keys(parsed[0])
           }})
           commit('UPDATE_LOADING_STATUS', {id: data.cardId, status: false})
-          console.log('adding corpusdata ############')
          
           for(let i in state.cards){
             if(state.cards[i].id == data.cardId){

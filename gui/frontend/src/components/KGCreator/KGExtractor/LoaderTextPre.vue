@@ -26,7 +26,6 @@
       v-model="selected"
       :headers="headers"
       :items="desserts"
-      :single-select="true"
       item-key="name"
       show-select
       class="elevation-1"
@@ -72,7 +71,6 @@
 export default {
   data(){
     return {
-      singleSelect: false,
       selected: [],
       headers: [
         {
@@ -88,11 +86,11 @@ export default {
       ],
       desserts: [
         {
-          table: 'COVID-19.csv',
-          size: '1.7MB',
+          table: 'vispub_cleaned_sample4.csv',
+          size: '4KB',
           last_time: 'Today',
-          upload_date: '2020-12-21',
-        }, 
+          upload_date: '2022-5-22',
+        }
       ]
     }
   },

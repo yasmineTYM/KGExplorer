@@ -8,6 +8,7 @@ import menu from '@/store/modules/Common/menu'
 import link from '@/store/modules/Common/link'
 import loadertext from '@/store/modules/KGCreator/KGExtractor/loadertext'
 import loadergraph from '@/store/modules/KGCreator/KGLoader/loadergraph'
+import extractor from '@/store/modules/KGCreator/KGExtractor/extractor'
 // import ontology from '@/store/modules/ontology'
 // import embeddinggenerator from '@/store/modules/embeddinggenerator'
 Vue.use(Vuex)
@@ -68,11 +69,9 @@ export default new Vuex.Store({
   },
   modules: {
     menu,
-   
-    // globalview,
-    
     link, 
     loadergraph,
-    loadertext
+    loadertext,
+    extractor
   }
 })
