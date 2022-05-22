@@ -12,6 +12,7 @@ function createNewCorpusCard(id){
     height: null,
     data: undefined,
     loadingStatus: false, 
+    maximized: false, 
   }
 }
 
@@ -24,6 +25,19 @@ export default {
     inner_component: () => import('@/components/KGCreator/KGExtractor/Content')
   }, 
   mutations: {
+    CONVERT_FLAG(state, id){
+      for(let i in state.cards){
+        if(state.cards[i].id == `${id}`){
+          if(state.cards[i].maximized==true){
+            state.cards[i].maximized = false
+            
+          }else{
+            state.cards[i].maximized = true
+          }
+        }
+      }
+      
+    },
     ADD_COMPONENT(state){
       const nextIndex = state.nextAvailableIndex;
       state.nextAvailableIndex += 1
@@ -103,6 +117,10 @@ export default {
     },
   }, 
   actions: {
+    convert_flag({commit}, id){
+      // const toConvert = state.cards.filter(card => card.id == id)[0];
+      commit('CONVERT_FLAG', id)
+    },
     addComp({commit}, ){
       console.log('adding')
       commit('ADD_COMPONENT');
