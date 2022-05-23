@@ -10,9 +10,6 @@
           {{selectedCorpusName}}
     </v-card-text>
     <v-card-text v-else class="card-name title-mini">
-      <!-- <v-icon>
-        mdi-database  
-      </v-icon> -->
     
       <!-- <v-row> -->
         <v-col key="1" cols="4">
@@ -77,6 +74,7 @@ export default {
   },
   methods:{
     cardDoubleClick(){
+      //TODO: change to detech $route.path
       console.log('check this!')
       console.log(this.itemProps.maximized)
       if(this.itemProps.maximized==false){

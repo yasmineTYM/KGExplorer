@@ -23,8 +23,8 @@ async function COMP_GARD(to, from, next) {
   }
   const {component} = compid_parser(compid) 
   to.params.comp_type = component 
-  const EXIST = await CHECK_COMP_EXIST(component, compid) 
-  if (EXIST){
+  const _EXIST = await CHECK_COMP_EXIST(component, compid) 
+  if (_EXIST){
     next()
   }else{
     next('/')

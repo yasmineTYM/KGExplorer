@@ -41,13 +41,6 @@
       </v-card>
     </v-hover>
 
-      <!-- <v-dialog
-        v-model="dialog"
-        max-width="800"
-      >
-        <slot name="dialog" :close="closeDialog"></slot>
-      </v-dialog>
-   -->
     <v-menu
       v-model="showRightClickMenu"
       :position-x="rightMenuX"
