@@ -8,8 +8,9 @@ export default{
         encoder: '',
         extOutput: [],
         currentLabel: {},
-        label2Phrase: {}
+        label2Phrase: {},
 
+        loading: false,
     },
     mutations: {
         SET_DATASET(state, data){
@@ -29,18 +30,26 @@ export default{
         },
         SET_LABEL2PHRASE(state, data){
             state.label2Phrase = data 
-        }
+        },
+        CHANGE_LOADING(state, data){
+            state.loading = data
+        }   
     },
     actions: {
         // click process button to extracr phrases 
         async process({commit, state}, data){
             console.log('process store', data)
+            commit('CHANGE_LOADING', true)
             commit('SET_DATASET', data.dataset)
             commit('SET_EMBEDCOLUMN', data.embedColumn)
             commit('SET_ENCODER', data.encoder)
 
             let extOutput = await axios.post('http://127.0.0.1:5000/extractor', data)
+            commit('SET_CURRENTLABEL', extOutput['data']['currentLabel'])
+            commit('SET_DATASET', extOutput['data']['dataset'])
+            commit('SET_LABEL2PHRASE', extOutput['data']['label2phrase'])
             console.log(extOutput)
+            commit('CHANGE_LOADING', false)
         }
     }
 }
