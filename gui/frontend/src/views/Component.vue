@@ -18,25 +18,16 @@ export default {
       required: true, 
     }
   },
-  data: () => ({
-    //
-    component: undefined,
-    itemProps: undefined, 
-  }),
-  created() {
-    this.itemProps = 
-      this.compState.cards.filter(card => card.id == this.compid)[0]
-  },
   computed: {
     ...mapState({
       compState: function(state){
         return state[this.comp_type]
       }
-    })
+    }), 
+    itemProps() {
+      return this.compState.cards.filter(card => card.id == this.compid)[0] 
+    }
   },
-  methods:{
-
-  }
 };
 </script>
 <style>

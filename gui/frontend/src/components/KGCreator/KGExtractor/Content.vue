@@ -77,8 +77,10 @@ export default {
   },
   methods:{
     cardDoubleClick(){
+      console.log('check this!')
+      console.log(this.itemProps.maximized)
       if(this.itemProps.maximized==false){
-        this.$router.push({name:'Component'})
+        this.$router.push(`/component/${this.itemProps.id}`)
         this.$store.dispatch('loadertext/convert_flag', this.itemProps.id)
       }else{
         this.$router.push({name:'Dashboard'})

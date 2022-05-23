@@ -6,18 +6,11 @@
         <Content :itemProps="itemProps"/>
       </template>
 
-      <!-- <template v-slot:dialog="{close}">
-        <LoaderTextPre
-            @loaderAction="loaderAction"
-            @closeDialog="close"
-        />
-      </template>  -->
     </CompTemplate>
   </div>
 </template>
 <script>
 import CompTemplate from '@/components/Common/Template'
-import LoaderTextPre from './LoaderTextPre'
 import Content from './Content'
 
 export default {
@@ -29,7 +22,6 @@ export default {
   },
   components: {
     CompTemplate,
-    LoaderTextPre, 
     Content,  
   },
   methods: {

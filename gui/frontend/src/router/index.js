@@ -11,7 +11,7 @@ const routes = [
     component: () => import('../views/Dashboard')
   },
   {
-    path: '/component/comp1',
+    path: '/component/:compid',
     name: 'Component', 
     component: () => import('../views/Component'), 
     props: true, 

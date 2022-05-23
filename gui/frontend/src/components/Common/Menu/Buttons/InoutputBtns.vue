@@ -341,8 +341,6 @@ export default {
     'loadertext'])
   },
   created() {
-    window.d3 = d3
-    console.log("check d3:", d3.mouse)
   }, 
   watch:{
     marginLeft: function (){
