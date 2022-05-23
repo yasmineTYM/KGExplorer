@@ -99,6 +99,8 @@ export default {
   },
   methods:{
     cardDoubleClick(){
+      console.log('check this!')
+      console.log(this.itemProps.maximized)
       if(this.itemProps.maximized==false){
         this.$router.push(`/component/${this.itemProps.id}`) // minimized -> full size
         this.$store.dispatch('loadertext/convert_flag', this.itemProps.id)
