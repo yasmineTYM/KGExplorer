@@ -10,11 +10,6 @@
           {{selectedCorpusName}}
     </v-card-text>
     <v-card-text v-else class="card-name title-mini">
-      <!-- <v-icon>
-        mdi-database  
-      </v-icon> -->
-    
-      <!-- <v-row> -->
         <v-col key="1" cols="4">
           <v-btn  @click="loadData">
              <v-icon>mdi-arrow-up-circle</v-icon>{{selectedCorpusName}}
@@ -35,11 +30,12 @@
         ></v-select>
         </v-col>
         <v-col key="4" cols="2">
-          <v-btn  @click="Process">
+          <v-btn  @click="Process" :loading = "extractor.loading">
              <v-icon>mdi-arrow-right-drop-circle</v-icon>Process
           </v-btn>
         </v-col>
-      <!-- </v-row> -->
+      
+      
       
       <v-dialog
         v-model="dialog"
@@ -50,7 +46,30 @@
         />
       </v-dialog>
       <!-- {{selectedCorpusName}} -->
+      <div class="full-height full-width">
+        <v-card >
+          scatterplot
+        </v-card>
+      </div>
+      <div class="full-height full-width">
+        <v-card>
+          <v-col key="5" cols="12">
+            <v-data-table
+            :headers="headers"
+            :items="tableData"
+            :items-per-page="5"
+            class="elevation-1"
+          ></v-data-table>
+          </v-col>
+          <v-col key="6" cols="12">
+            <v-card-text>
+              fff
+            </v-card-text>
+          </v-col>
+        </v-card>
+      </div>
     </v-card-text>
+    
   </div>
 </template>
 <script>
@@ -70,18 +89,21 @@ export default {
     return {
       dialog: false,
       // options_columns: [],
-      options_encoder: ['phrase','bio','dygiepp','NER'],
+      options_encoder: ['noun phrase','medical','ner'],
       selected_encoder: '',
-      selected_column: ''
+      selected_column: '',
+
+      headers: [],
+      tableData: []
     }
   },
   methods:{
     cardDoubleClick(){
       if(this.itemProps.maximized==false){
-        this.$router.push({name:'Component'})
+        this.$router.push(`/component/${this.itemProps.id}`) // minimized -> full size
         this.$store.dispatch('loadertext/convert_flag', this.itemProps.id)
       }else{
-        this.$router.push({name:'Dashboard'})
+        this.$router.push({name:'Dashboard'}) // full size -> minimized 
         this.$store.dispatch('loadertext/convert_flag', this.itemProps.id)
       }
     },
@@ -117,14 +139,26 @@ export default {
   watch:{
     'itemProps.data'(newVal, oldVal){
       console.log('data changed ', newVal)
-    
+    },
+    'extractor.label2Phrase'(newVal){
+      var output = []
+      var target = ['Year','Title','Author','Doc_ID','AuthorNames']
+      for(let i=0; i<this.itemProps.data.tableNames.length; i++){
+        if(target.includes(this.itemProps.data.tableNames[i]))
+        output.push({
+          text: this.itemProps.data.tableNames[i],
+          value: this.itemProps.data.tableNames[i]
+        })
+      }
+      this.headers = output
+      this.tableData = this.extractor.dataset
     }
   },
   created(){
     // this.convertFlag = false
   },
   computed: {
-    ...mapState(['drawLink',]),
+    ...mapState(['drawLink', 'extractor']),
 
     // Determine Whether the component is draggable
     // Not allowed when resizing and drawling link
@@ -142,7 +176,11 @@ export default {
       }else{
         return 'No Corpus'
       }
-    }
+    },
+    pageHeight(){
+      return (document.documentElement.scrollHeight).toString()+"px"
+    },
+    
   }
 }
 </script>
@@ -158,5 +196,14 @@ export default {
 .title-mini {
   color: steelblue!important;
   font-weight: bold;
-}  
+} 
+.full-height{
+ height: 100%
+} 
+.full-width{
+  width:100%
+}
+.harf-height{
+  height:50%
+}
 </style>
