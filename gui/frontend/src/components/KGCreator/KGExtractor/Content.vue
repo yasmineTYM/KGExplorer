@@ -167,7 +167,7 @@ export default {
     },
     "extractor.label2Phrase"(newVal) {
       var output = [];
-      var target = ["Year", "Title", "Author", "Doc_ID", "AuthorNames",'Abstract'];
+      var target = ["Year", "Title", "Author", "Doc_ID", "AuthorNames"];
       for (let i = 0; i < this.itemProps.data.tableNames.length; i++) {
         if (target.includes(this.itemProps.data.tableNames[i]))
           output.push({
