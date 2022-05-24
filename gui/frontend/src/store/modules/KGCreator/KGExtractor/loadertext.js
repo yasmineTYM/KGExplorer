@@ -12,7 +12,16 @@ function createNewCorpusCard(id){
     height: null,
     data: {data:null, tableNames:[]},
     loadingStatus: false, 
-    maximized: false, 
+    maximized: false,
+    dataset: [],
+    embedColumn: '',
+    encoder: '',
+    extOutput: [],
+    currentLabel: {},
+    label2Phrase: {},
+    uniqueLabels: [],
+
+    loading: false, 
   }
 }
 
@@ -115,6 +124,32 @@ export default {
         }
       }
     },
+
+    // extractor...
+    SET_DATASET(state, {id,data}){
+      state.cards[id].dataset = data
+    },
+    SET_EMBEDCOLUMN(state, {id,data}){
+        state.cards[id].embedColumn = data
+    },
+    SET_ENCODER(state, {id,data}){
+        state.cards[id].encoder = data
+    },
+    SET_EXTOUTPUT(state, {id,data}){
+        state.cards[id].extOutput = data
+    },
+    SET_CURRENTLABEL(state, {id,data}){
+        state.cards[id].currentLabel = data
+    },
+    SET_LABEL2PHRASE(state, {id, data}){
+        state.cards[id].label2Phrase = data 
+    },
+    CHANGE_LOADING(state,{id,data}){
+        state.cards[id].loading = data
+    },
+    SET_UNIQUELABELS(state, {id,data}){
+        state.cards[id].uniqueLabels = data
+    }
   }, 
   actions: {
     convert_flag({commit}, id){
@@ -201,7 +236,23 @@ export default {
         }
       } 
     }, 
+    // click process button to extracr phrases 
+    async process({commit, state}, data){
+      console.log('process store', data)
+      var idx = data['id'].split('-')[2]
+      commit('CHANGE_LOADING', {id: idx, data: true})
+      commit('SET_DATASET', {id: idx, data:data.dataset})
+      commit('SET_EMBEDCOLUMN', {id: idx, data: data.embedColumn})
+      commit('SET_ENCODER', {id: idx, data:data.encoder})
 
+      let extOutput = await axios.post('http://127.0.0.1:5000/extractor', data)
+      commit('SET_CURRENTLABEL', {id: idx, data: extOutput['data']['currentLabel']})
+      commit('SET_DATASET', {id: idx, data:extOutput['data']['dataset']})
+      commit('SET_LABEL2PHRASE', {id: idx, data:extOutput['data']['label2phrase']})
+      commit('SET_UNIQUELABELS', {id: idx, data:extOutput['data']['uniqueLabels']})
+      // console.log(extOutput)
+      commit('CHANGE_LOADING', {id: idx, data:false})
+    },
 
     outputHandler({commit, dispatch, state}, linkData){
       // Need to handler output since self is source

@@ -24,6 +24,10 @@ export default{
         annoData: {
             type: Object,
             required: true
+        },
+        itemProps:{
+            type: Object,
+            required: true
         }
     },
     components:{
@@ -66,9 +70,9 @@ export default{
             console.log(phrase_ids)
             // console.log(this.extractor.currentLabel[phrase_ids[0]])
             for(let i=0; i<phrase_ids.length; i++){
-                var temp = this.extractor.currentLabel[phrase_ids[i]]
+                var temp = this.itemProps.currentLabel[phrase_ids[i]]
                 // console.log(temp)
-                var idx = this.extractor.uniqueLabels.indexOf(temp.label)
+                var idx = this.itemProps.uniqueLabels.indexOf(temp.label)
                 output.annotations.push({
                     id: phrase_ids[i],
                     prob: 1.0,
@@ -92,10 +96,10 @@ export default{
             
             var colors = ["#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#8dd3c7","#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5","#d9d9d9",'#bc80bd','#ccebc5',"#a6cee3"]
 
-            for(let i=0; i<this.extractor.uniqueLabels.length; i++){
+            for(let i=0; i<this.itemProps.uniqueLabels.length; i++){
                 output.push({
                     id: i,
-                    text: this.extractor.uniqueLabels[i],
+                    text: this.itemProps.uniqueLabels[i],
                     color: colors[i],
                     textColor: '#ffffff'
                 })
@@ -124,7 +128,7 @@ export default{
                 return null
             }
         },
-        ...mapState(['extractor'])
+        // ...mapState(['extractor'])
     }
 
 }

@@ -16,7 +16,7 @@
             mdi-reorder-horizontal
           </v-icon>
       </v-btn>
-      <v-toolbar-title>DoxCompass-beta</v-toolbar-title>
+      <v-toolbar-title>ICICLE-KGExplorer</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
         text

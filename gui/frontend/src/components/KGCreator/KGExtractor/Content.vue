@@ -32,7 +32,7 @@
         ></v-select>
         </v-col>
         <v-col key="4" cols="2">
-          <v-btn  @click="Process" :loading = "extractor.loading">
+          <v-btn  @click="Process" :loading = "itemProps.loading">
              <v-icon>mdi-arrow-right-drop-circle</v-icon>Process
           </v-btn>
         </v-col>
@@ -71,7 +71,7 @@
             </v-col>
           <v-col key="6" cols="7" lg="7">
             <v-card>
-              <Annotator :annoData = "rowData"/>
+              <Annotator :annoData = "rowData" :itemProps="itemProps"/>
             </v-card>
           </v-col>
       </v-row>
@@ -143,7 +143,8 @@ export default {
       if (this.selected_encoder == "" || this.selected_column == "") {
         alert("please choose all options!");
       } else {
-        this.$store.dispatch("extractor/process", {
+        this.$store.dispatch("loadertext/process", {
+          id: this.itemProps.id,
           dataset: this.itemProps.data,
           embedColumn: this.selected_column,
           encoder: this.selected_encoder,
@@ -165,7 +166,7 @@ export default {
     "itemProps.data"(newVal, oldVal) {
       console.log("data changed ", newVal);
     },
-    "extractor.label2Phrase"(newVal) {
+    "itemProps.label2Phrase"(newVal) {
       var output = [];
       var target = ["Year", "Title", "Author", "Doc_ID", "AuthorNames"];
       for (let i = 0; i < this.itemProps.data.tableNames.length; i++) {
@@ -176,14 +177,14 @@ export default {
           });
       }
       this.headers = output;
-      this.tableData = this.extractor.dataset;
+      this.tableData = this.itemProps.dataset;
     },
   },
   created() {
     // this.convertFlag = false
   },
   computed: {
-    ...mapState(["drawLink", "extractor"]),
+    // ...mapState(["drawLink", "extractor"]),
 
     // Determine Whether the component is draggable
     // Not allowed when resizing and drawling link
