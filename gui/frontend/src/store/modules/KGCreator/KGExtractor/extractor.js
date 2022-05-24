@@ -9,6 +9,7 @@ export default{
         extOutput: [],
         currentLabel: {},
         label2Phrase: {},
+        uniqueLabels: [],
 
         loading: false,
     },
@@ -33,7 +34,10 @@ export default{
         },
         CHANGE_LOADING(state, data){
             state.loading = data
-        }   
+        },
+        SET_UNIQUELABELS(state, data){
+            state.uniqueLabels = data
+        }
     },
     actions: {
         // click process button to extracr phrases 
@@ -48,6 +52,7 @@ export default{
             commit('SET_CURRENTLABEL', extOutput['data']['currentLabel'])
             commit('SET_DATASET', extOutput['data']['dataset'])
             commit('SET_LABEL2PHRASE', extOutput['data']['label2phrase'])
+            commit('SET_UNIQUELABELS', extOutput['data']['uniqueLabels'])
             console.log(extOutput)
             commit('CHANGE_LOADING', false)
         }

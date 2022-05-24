@@ -26,7 +26,7 @@
       v-model="selected"
       :headers="headers"
       :items="desserts"
-      item-key="name"
+      item-key="table"
       show-select
       class="elevation-1"
       >
@@ -87,7 +87,12 @@ export default {
       desserts: [
         {
           table: 'vispub_cleaned_sample4.csv',
-          size: '4KB',
+          size: '32KB',
+          last_time: 'Today',
+          upload_date: '2022-5-22',
+        },{
+          table: 'ner_sample.csv',
+          size: '20KB',
           last_time: 'Today',
           upload_date: '2022-5-22',
         }

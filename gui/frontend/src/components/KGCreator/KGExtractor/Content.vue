@@ -54,25 +54,27 @@
         </v-card>
       </div>
       <div class="full-height full-width">
-        <v-container>
           <v-row justify="start">
-            <v-col key="5" cols="6">
+            <v-col key="5" cols="5" lg="5">
               <v-card>
                 <v-data-table
                 :headers="headers"
                 :items="tableData"
                 :items-per-page="5"
                 class="elevation-1"
+                :show-select ="true"
+                :single-select = "true"
+                item-key="Doc_ID"
+                @item-selected="clickTableRow"
                 ></v-data-table>
               </v-card>
             </v-col>
-          <v-col key="6" cols="6">
+          <v-col key="6" cols="7" lg="7">
             <v-card>
-              fff
+              <Annotator :annoData = "rowData"/>
             </v-card>
           </v-col>
       </v-row>
-      </v-container>
       </div>
     </v-card-text>
     
@@ -80,6 +82,7 @@
 </template>
 <script>
 import LoaderTextPre from "./LoaderTextPre.vue";
+import Annotator from './Annotator.vue';
 import { mapState } from "vuex";
 export default {
   props: {
@@ -90,6 +93,7 @@ export default {
   },
   components: {
     LoaderTextPre,
+    Annotator
   },
   data() {
     return {
@@ -101,6 +105,8 @@ export default {
 
       headers: [],
       tableData: [],
+
+      rowData: {}
     };
   },
   methods: {
@@ -144,6 +150,16 @@ export default {
         });
       }
     },
+    // click one row in the table 
+    clickTableRow(raw){
+      console.log('test')
+      if(raw['value']==true){
+        this.rowData = raw['item']
+      }
+      // console.log()
+      // this.rowData = rawData
+      
+    }
   },
   watch: {
     "itemProps.data"(newVal, oldVal) {
@@ -151,7 +167,7 @@ export default {
     },
     "extractor.label2Phrase"(newVal) {
       var output = [];
-      var target = ["Year", "Title", "Author", "Doc_ID", "AuthorNames"];
+      var target = ["Year", "Title", "Author", "Doc_ID", "AuthorNames",'Abstract'];
       for (let i = 0; i < this.itemProps.data.tableNames.length; i++) {
         if (target.includes(this.itemProps.data.tableNames[i]))
           output.push({
